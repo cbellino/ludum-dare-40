@@ -6,6 +6,7 @@ namespace LD40
 {
 	public enum FireflyState
 	{
+		None,
 		Idle,
 		Attracted,
 		Following,
@@ -21,6 +22,7 @@ namespace LD40
 		public Vector3 followOffset = new Vector3(1f, 1f, 0f);
 
 		FireflyState state;
+		FireflyState previousState;
 		float startMoveTimestamp;
 		Vector3 moveDestination;
 		Vector3 originalPosition;
@@ -29,7 +31,7 @@ namespace LD40
 		
 		void Start ()
 		{
-			SetStateIdle();
+			SetState(FireflyState.Idle);
 		}
 
 		void Update ()
@@ -46,42 +48,58 @@ namespace LD40
 					Follow();
 					break;
 
-				default: // Idle
+				case FireflyState.Idle:
 					SetIdleDestination();
 					MoveToDestination();
 					break;
 			}
 		}
 
-		void SetStateIdle ()
+		void SetState (FireflyState newState)
 		{
-			followCollider.enabled = true;
-			lightEmitter.mask.gameObject.SetActive(true);
-			originalPosition = transform.position;
-			isMoving = false;
-			state = FireflyState.Idle;
+			OnExitState(state);
+			state = newState;
+			OnEnterState(newState);
 		}
 
-		void SetStateFollowing (Transform target)
+		void OnEnterState (FireflyState newState)
 		{
-			followCollider.enabled = false;
-			lightEmitter.mask.gameObject.SetActive(false);
-			followingActor = target;
-			state = FireflyState.Following;
+			// Debug.Log($"OnEnterState: {newState}");
 
-			Debug.Log("target" + target.gameObject.name);
-			var targerLightEmitter = target.GetComponent<LightEmitter>();
-			if (targerLightEmitter != null)
+			switch (state)
 			{
-				targerLightEmitter.AddLight(lightEmitter.radius);
+				case FireflyState.Idle:
+					followCollider.enabled = true;
+					lightEmitter.mask.gameObject.SetActive(true);
+					originalPosition = transform.position;
+					isMoving = false;
+					break;
+
+				case FireflyState.Following:
+					followCollider.enabled = false;
+					lightEmitter.mask.gameObject.SetActive(false);
+
+					var targerLightEmitter = followingActor.GetComponent<LightEmitter>();
+					if (targerLightEmitter != null)
+					{
+						targerLightEmitter.AddLight(lightEmitter.radius);
+					}
+
+					break;
 			}
+		}
+
+		void OnExitState (FireflyState oldState)
+		{
+			// Debug.Log($"OnExitState: {oldState}");
 		}
 
 		void OnTriggerEnter(Collider other)
 		{	
 			if (other.gameObject.tag == "Player")
 			{
-				SetStateFollowing(other.transform);
+				followingActor = other.transform;
+				SetState(FireflyState.Following);
 			}
 		}
 

@@ -18,7 +18,6 @@ namespace LD40
 
 		public void AddLight (float amount)
 		{
-			Debug.Log($"AddLight: {amount}");
 			radius += amount;
 		}
 	}

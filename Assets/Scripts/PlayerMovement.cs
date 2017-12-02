@@ -7,7 +7,7 @@ namespace LD40
 	public class PlayerMovement : MonoBehaviour
 	{
 		public Rigidbody rb;
-		public float speed = 10f;
+		public float speed = 1f;
 
 		void Update ()
 		{
