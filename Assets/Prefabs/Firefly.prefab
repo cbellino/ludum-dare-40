@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 114465430423589138}
   m_Layer: 0
   m_Name: Follow Collider
-  m_TagString: Untagged
+  m_TagString: Firefly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 114538294297948992}
   m_Layer: 0
   m_Name: Attract Collider
-  m_TagString: Untagged
+  m_TagString: Firefly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

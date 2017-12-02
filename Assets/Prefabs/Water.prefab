@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936998536789548}
   - component: {fileID: 65513938416815448}
+  - component: {fileID: 114345127876483520}
   m_Layer: 0
   m_Name: Attract Collider
   m_TagString: Untagged
@@ -53,6 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4507811684610290}
   - component: {fileID: 65757075304380446}
+  - component: {fileID: 114444646542648664}
   m_Layer: 0
   m_Name: Slow Collider
   m_TagString: Untagged
@@ -181,7 +183,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa546f88223b9f341b6d2fe8cb715040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attractCollider: {fileID: 0}
+  attractCollider: {fileID: 65513938416815448}
+--- !u!114 &114345127876483520
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1334039035578068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc52d08fa76b8234eaeeb94e12a343a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114444646542648664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859434698345312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc52d08fa76b8234eaeeb94e12a343a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212432968377346862
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -12,9 +12,10 @@ namespace LD40
 		{	
 			if (param.source.name == attractCollider.name)
 			{
-				if (param.collider.gameObject.tag == "Firefly")
+				if (param.collider.gameObject.tag == "Firefly" && param.collider.name == "Attract Collider")
 				{
-					Debug.Log("Firefly entered water.");
+					Debug.Log("AttractedByWater");
+					param.collider.gameObject.SendMessageUpwards("AttractedByWater", this);
 				}
 			}
 		}

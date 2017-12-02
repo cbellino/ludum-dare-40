@@ -14,6 +14,7 @@ namespace LD40
 		Dead // :'(
 	}
 
+	// TODO: Clean up the FSM... This is so hard to read...
 	public class Firefly : MonoBehaviour
 	{
 		public Rigidbody rb;
@@ -30,6 +31,7 @@ namespace LD40
 		Vector3 originalPosition;
 		bool isMovingIntoPosition;
 		Transform followingActor;
+		Water attractedTo;
 		
 		void Start ()
 		{
@@ -40,10 +42,11 @@ namespace LD40
 		{
 			switch (state)
 			{
-				case FireflyState.Attracted:
-					// Move the the actor it is attracted to (player, water, etc)
-					// Move to target position
-					// Set state to Follow
+				case FireflyState.Idle:
+					MoveToRandomIdlePosition();
+					if (isMovingIntoPosition) {
+						MoveToDestination();
+					}
 					break;
 
 				case FireflyState.MoveToPlayer:
@@ -55,13 +58,17 @@ namespace LD40
 					Follow();
 					break;
 
-				case FireflyState.Idle:
-					MoveToRandomIdlePosition();
-					if (isMovingIntoPosition) {
-						MoveToDestination();
-					}
+				case FireflyState.Attracted:
+					MoveToAttracted();
+					MoveToDestination();
 					break;
 			}
+		}
+
+		public void AttractedByWater (Water water)
+		{
+			attractedTo = water;
+			Transition(FireflyState.Attracted);
 		}
 
 		void OnChildTriggerEnter (TriggerParam param)
@@ -85,13 +92,13 @@ namespace LD40
 
 		void OnEnterState (FireflyState newState)
 		{
-			// Debug.Log($"OnEnterState: {newState}");
+			Debug.Log("OnEnterState: " + newState);
 
 			switch (newState)
 			{
 				case FireflyState.Idle:
 					originalPosition = transform.position;
-					followCollider.enabled = true;
+					attractCollider.enabled = false;
 					isMovingIntoPosition = false;
 					break;
 
@@ -102,20 +109,22 @@ namespace LD40
 				case FireflyState.Following:
 					attractCollider.enabled = true;
 					lightEmitter.mask.gameObject.SetActive(false);
+					AddLightToFollowingActor(lightEmitter.radius);
+					break;
 
-					var followingActorLightEmitter = followingActor.GetComponent<LightEmitter>();
-					if (followingActorLightEmitter != null)
-					{
-						followingActorLightEmitter.AddLight(lightEmitter.radius);
-					}
-
+				case FireflyState.Attracted:
+					startMoveTimestamp = Time.time;
+					lightEmitter.mask.gameObject.SetActive(true);
+					followCollider.enabled = false;
+					attractCollider.enabled = false;
+					AddLightToFollowingActor(-lightEmitter.radius);
 					break;
 			}
 		}
 
 		void OnExitState (FireflyState oldState)
 		{
-			// Debug.Log($"OnExitState: {oldState}");
+			Debug.Log("OnExitState: " + oldState);
 
 			switch (oldState)
 			{
@@ -130,6 +139,14 @@ namespace LD40
 			}
 		}
 
+		void AddLightToFollowingActor(float amount) {
+			var followingActorLightEmitter = followingActor.GetComponent<LightEmitter>();
+			if (followingActorLightEmitter != null)
+			{
+				followingActorLightEmitter.AddLight(amount);
+			}
+		}
+
 		void MoveToRandomIdlePosition ()
 		{
 			if (!isMovingIntoPosition || transform.position == moveDestination) {
@@ -141,9 +158,13 @@ namespace LD40
 				moveDestination = randomPosition;
 				startMoveTimestamp = Time.time;
 				isMovingIntoPosition = true;
-				
-				// Debug.Log($"Firefly ({name}) moving to {randomPosition}");
 			}
+		}
+
+		void MoveToAttracted()
+		{
+			moveDestination = attractedTo.transform.position;
+			float distanceFromTarget = Vector3.Distance(transform.position, moveDestination);
 		}
 
 		void MoveToFollowingActorPosition ()
