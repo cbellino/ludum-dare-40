@@ -15,5 +15,11 @@ namespace LD40
 		{
 			mask.transform.localScale = Vector3.one * radius * 2;
 		}
+
+		public void AddLight (float amount)
+		{
+			Debug.Log($"AddLight: {amount}");
+			radius += amount;
+		}
 	}
 }

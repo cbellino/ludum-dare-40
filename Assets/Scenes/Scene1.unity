@@ -303,7 +303,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1564866682443536, guid: 9325cd3b7f47cc94fb984d54ae9dd909, type: 2}
       propertyPath: m_Name
-      value: Ground (1)
+      value: Wall
       objectReference: {fileID: 0}
     - target: {fileID: 4478401141084404, guid: 9325cd3b7f47cc94fb984d54ae9dd909, type: 2}
       propertyPath: m_LocalScale.y
@@ -468,7 +468,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1318645109
 Transform:
   m_ObjectHideFlags: 0
@@ -520,6 +520,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4938845258067392, guid: 36ddb7e0a666aab4daa67eac038e6cea, type: 2}
       propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212274955777094746, guid: 36ddb7e0a666aab4daa67eac038e6cea,
+        type: 2}
+      propertyPath: m_MaskInteraction
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

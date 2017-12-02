@@ -8,16 +8,17 @@ namespace LD40
 	{
 		Idle,
 		Attracted,
-		Follow,
+		Following,
 		Dead // :'(
 	}
 
 	public class Firefly : MonoBehaviour
 	{
 		public Rigidbody rb;
+		public LightEmitter lightEmitter;
 		public float moveSpeed = 20f;
 		public Vector3 followOffset = new Vector3(1f, 1f, 0f);
-				
+
 		FireflyState state;
 		float startMoveTimestamp;
 		Vector3 moveDestination;
@@ -27,7 +28,7 @@ namespace LD40
 		
 		void Start ()
 		{
-			SetState(FireflyState.Idle);
+			SetStateIdle();
 		}
 
 		void Update ()
@@ -40,10 +41,7 @@ namespace LD40
 					// Set state to Follow
 					break;
 
-				case FireflyState.Follow:
-					// Follow an actor around
-						// Move to target position
-						// Loop
+				case FireflyState.Following:
 					Follow();
 					break;
 
@@ -54,20 +52,34 @@ namespace LD40
 			}
 		}
 
+		void SetStateIdle ()
+		{
+			lightEmitter.gameObject.SetActive(true);
+			originalPosition = transform.position;
+			isMoving = false;
+			state = FireflyState.Idle;
+		}
+
+		void SetStateFollowing (Transform target)
+		{
+			lightEmitter.gameObject.SetActive(false);
+			followingActor = target;
+			state = FireflyState.Following;
+
+			Debug.Log("target" + target.gameObject.name);
+			var targerLightEmitter = target.GetComponent<LightEmitter>();
+			if (targerLightEmitter != null)
+			{
+				targerLightEmitter.AddLight(lightEmitter.radius);
+			}
+		}
+
 		void OnTriggerEnter(Collider other)
 		{	
 			if (other.gameObject.tag == "Player")
 			{
-				followingActor = other.transform;
-				SetState(FireflyState.Follow);
+				SetStateFollowing(other.transform);
 			}
-		}
-
-		void SetState (FireflyState newState)
-		{
-			isMoving = false;
-			state = newState;
-			originalPosition = transform.position;
 		}
 
 		void Follow ()
@@ -96,8 +108,6 @@ namespace LD40
 		void MoveToDestination () 
 		{
 			if (!isMoving) { return; }
-
-			Debug.Log("MoveToDestination");
 
 			float journeyLength = Vector3.Distance(transform.position, moveDestination);
 			float distanceCovered = (Time.time - startMoveTimestamp) * moveSpeed;
