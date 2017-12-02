@@ -15,6 +15,7 @@ namespace LD40
 	public class Firefly : MonoBehaviour
 	{
 		public Rigidbody rb;
+		public Collider followCollider;
 		public LightEmitter lightEmitter;
 		public float moveSpeed = 20f;
 		public Vector3 followOffset = new Vector3(1f, 1f, 0f);
@@ -54,7 +55,8 @@ namespace LD40
 
 		void SetStateIdle ()
 		{
-			lightEmitter.gameObject.SetActive(true);
+			followCollider.enabled = true;
+			lightEmitter.mask.gameObject.SetActive(true);
 			originalPosition = transform.position;
 			isMoving = false;
 			state = FireflyState.Idle;
@@ -62,7 +64,8 @@ namespace LD40
 
 		void SetStateFollowing (Transform target)
 		{
-			lightEmitter.gameObject.SetActive(false);
+			followCollider.enabled = false;
+			lightEmitter.mask.gameObject.SetActive(false);
 			followingActor = target;
 			state = FireflyState.Following;
 

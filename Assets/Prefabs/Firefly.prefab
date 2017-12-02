@@ -160,7 +160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 54825983163034362}
-  lightEmitter: {fileID: 0}
+  followCollider: {fileID: 135730501506666224}
+  lightEmitter: {fileID: 114614510485921316}
   moveSpeed: 0.2
   followOffset: {x: -0.3, y: 0.5, z: 0}
 --- !u!114 &114614510485921316
@@ -265,7 +266,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300010, guid: 0a17de3ffcc8da4479048a4065c841dd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
