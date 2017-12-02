@@ -13,12 +13,8 @@ namespace LD40
 		{
 			float moveHorizontal = Input.GetAxis("Horizontal");
 
-			Vector3 moveForce = new Vector3(
-				moveHorizontal * speed,
-				0f,
-				0f
-			);
-			rb.AddForce(moveForce);
+			Vector3 moveForce = new Vector3(moveHorizontal, 0f, 0f);
+			rb.velocity += moveForce * Mathf.Max(2f, speed);
 		}
 	}
 }
