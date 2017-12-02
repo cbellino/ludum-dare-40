@@ -16,8 +16,8 @@ namespace LD40
 	{
 		public Rigidbody rb;
 		public float moveSpeed = 20f;
-		public FireflyState state;
-
+		
+		FireflyState state;
 		float startMoveTimestamp;
 		Vector3 moveDestination;
 		Vector3 originalPosition;
@@ -80,7 +80,7 @@ namespace LD40
 				startMoveTimestamp = Time.time;
 				isMoving = true;
 				
-				Debug.Log($"Firefly ({name}) moving to {randomPosition}");
+				// Debug.Log($"Firefly ({name}) moving to {randomPosition}");
 			}
 		}
 	}

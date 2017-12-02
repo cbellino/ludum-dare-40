@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0a17de3ffcc8da4479048a4065c841dd
-timeCreated: 1512219290
+timeCreated: 1512234289
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +10,7 @@ TextureImporter:
     21300006: fireflies-sprites_3
     21300008: fireflies-sprites_4
     21300010: fireflies-sprites_5
+    21300012: fireflies-sprites_6
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -171,6 +172,20 @@ TextureImporter:
         serializedVersion: 2
         x: 64
         y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: fireflies-sprites_6
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
         width: 64
         height: 64
       alignment: 0
