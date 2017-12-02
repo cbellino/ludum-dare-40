@@ -8,8 +8,9 @@ namespace LD40
 	{
 		None,
 		Idle,
-		Attracted,
+		MoveToPlayer,
 		Following,
+		Attracted,
 		Dead // :'(
 	}
 
@@ -17,21 +18,22 @@ namespace LD40
 	{
 		public Rigidbody rb;
 		public Collider followCollider;
+		public Collider attractCollider;
 		public LightEmitter lightEmitter;
 		public float moveSpeed = 20f;
 		public Vector3 followOffset = new Vector3(1f, 1f, 0f);
 
+		float followDistance = 0.5f;
 		FireflyState state;
-		FireflyState previousState;
 		float startMoveTimestamp;
 		Vector3 moveDestination;
 		Vector3 originalPosition;
-		bool isMoving;
+		bool isMovingIntoPosition;
 		Transform followingActor;
 		
 		void Start ()
 		{
-			SetState(FireflyState.Idle);
+			Transition(FireflyState.Idle);
 		}
 
 		void Update ()
@@ -44,18 +46,37 @@ namespace LD40
 					// Set state to Follow
 					break;
 
+				case FireflyState.MoveToPlayer:
+					MoveToFollowingActorPosition();
+					MoveToDestination();
+					break;
+
 				case FireflyState.Following:
 					Follow();
 					break;
 
 				case FireflyState.Idle:
-					SetIdleDestination();
-					MoveToDestination();
+					MoveToRandomIdlePosition();
+					if (isMovingIntoPosition) {
+						MoveToDestination();
+					}
 					break;
 			}
 		}
 
-		void SetState (FireflyState newState)
+		void OnChildTriggerEnter (TriggerParam param)
+		{
+			if (param.source.name == followCollider.name)
+			{
+				if (param.collider.gameObject.tag == "Player")
+				{
+					followingActor = param.collider.transform;
+					Transition(FireflyState.MoveToPlayer);
+				}
+			}
+		}
+
+		void Transition (FireflyState newState)
 		{
 			OnExitState(state);
 			state = newState;
@@ -66,23 +87,26 @@ namespace LD40
 		{
 			// Debug.Log($"OnEnterState: {newState}");
 
-			switch (state)
+			switch (newState)
 			{
 				case FireflyState.Idle:
-					followCollider.enabled = true;
-					lightEmitter.mask.gameObject.SetActive(true);
 					originalPosition = transform.position;
-					isMoving = false;
+					followCollider.enabled = true;
+					isMovingIntoPosition = false;
+					break;
+
+				case FireflyState.MoveToPlayer:
+					startMoveTimestamp = Time.time;
 					break;
 
 				case FireflyState.Following:
-					followCollider.enabled = false;
+					attractCollider.enabled = true;
 					lightEmitter.mask.gameObject.SetActive(false);
 
-					var targerLightEmitter = followingActor.GetComponent<LightEmitter>();
-					if (targerLightEmitter != null)
+					var followingActorLightEmitter = followingActor.GetComponent<LightEmitter>();
+					if (followingActorLightEmitter != null)
 					{
-						targerLightEmitter.AddLight(lightEmitter.radius);
+						followingActorLightEmitter.AddLight(lightEmitter.radius);
 					}
 
 					break;
@@ -92,14 +116,45 @@ namespace LD40
 		void OnExitState (FireflyState oldState)
 		{
 			// Debug.Log($"OnExitState: {oldState}");
+
+			switch (oldState)
+			{
+				case FireflyState.Idle:
+					followCollider.enabled = false;
+					break;
+
+				case FireflyState.Following:
+					lightEmitter.mask.gameObject.SetActive(true);
+					attractCollider.enabled = false;
+					break;
+			}
 		}
 
-		void OnTriggerEnter(Collider other)
-		{	
-			if (other.gameObject.tag == "Player")
+		void MoveToRandomIdlePosition ()
+		{
+			if (!isMovingIntoPosition || transform.position == moveDestination) {
+				Vector3 randomPosition = new Vector3(
+					originalPosition.x + Random.Range(-0.3f, 0.3f), 
+					originalPosition.y + Random.Range(-0.1f, 0.1f),
+					originalPosition.z
+				);
+				moveDestination = randomPosition;
+				startMoveTimestamp = Time.time;
+				isMovingIntoPosition = true;
+				
+				// Debug.Log($"Firefly ({name}) moving to {randomPosition}");
+			}
+		}
+
+		void MoveToFollowingActorPosition ()
+		{
+			moveDestination = followingActor.position;
+			float distanceFromTarget = Vector3.Distance(transform.position, moveDestination);
+
+			if (distanceFromTarget <= followDistance)
 			{
-				followingActor = other.transform;
-				SetState(FireflyState.Following);
+				Transition(FireflyState.Following);
+				return;
 			}
 		}
 
@@ -110,26 +165,8 @@ namespace LD40
 			transform.position = Vector3.MoveTowards(transform.position, destination, step);
 		}
 
-		void SetIdleDestination ()
-		{
-			if (!isMoving || transform.position == moveDestination) {
-				Vector3 randomPosition = new Vector3(
-					originalPosition.x + Random.Range(-0.3f, 0.3f), 
-					originalPosition.y + Random.Range(-0.1f, 0.1f),
-					originalPosition.z
-				);
-				moveDestination = randomPosition;
-				startMoveTimestamp = Time.time;
-				isMoving = true;
-				
-				// Debug.Log($"Firefly ({name}) moving to {randomPosition}");
-			}
-		}
-
 		void MoveToDestination () 
 		{
-			if (!isMoving) { return; }
-
 			float journeyLength = Vector3.Distance(transform.position, moveDestination);
 			float distanceCovered = (Time.time - startMoveTimestamp) * moveSpeed;
 			float fractionJourney = distanceCovered / journeyLength;
