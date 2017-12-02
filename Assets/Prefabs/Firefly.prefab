@@ -36,6 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4729413621977430}
   - component: {fileID: 331731623447295062}
+  - component: {fileID: 114431054414182204}
   m_Layer: 0
   m_Name: Light Mask
   m_TagString: Untagged
@@ -69,6 +70,7 @@ GameObject:
   - component: {fileID: 4938845258067392}
   - component: {fileID: 114595085634317070}
   - component: {fileID: 54825983163034362}
+  - component: {fileID: 135730501506666224}
   m_Layer: 0
   m_Name: Firefly
   m_TagString: Untagged
@@ -83,11 +85,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1635669432497728}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.12, z: 0}
+  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_Children: []
   m_Father: {fileID: 4938845258067392}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4748300523106092
 Transform:
@@ -100,7 +102,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4938845258067392}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4877588428025794
 Transform:
@@ -126,8 +128,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4877588428025794}
-  - {fileID: 4729413621977430}
   - {fileID: 4748300523106092}
+  - {fileID: 4729413621977430}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -146,6 +148,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &114431054414182204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1635669432497728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20206d78ef123a14a813ceab7a18137c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mask: {fileID: 331731623447295062}
+  radius: 0.8
 --- !u!114 &114595085634317070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -159,6 +174,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 54825983163034362}
   moveSpeed: 0.2
+  followOffset: {x: -0.3, y: 0.5, z: 0}
+--- !u!135 &135730501506666224
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1687902572169810}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &212139528961106244
 SpriteRenderer:
   m_ObjectHideFlags: 1
