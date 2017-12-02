@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
+namespace LD40
+{
+	public class GameManager : MonoBehaviour
+	{
+		void Start ()
+		{
+			
+		}
 		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		void Update ()
+		{
+			
+		}
 	}
 }
