@@ -248,6 +248,8 @@ MonoBehaviour:
   lightEmitter: {fileID: 114614510485921316}
   moveSpeed: 0.2
   followOffset: {x: -0.3, y: 0.5, z: 0}
+  followingActor: {fileID: 0}
+  attractedTo: {fileID: 0}
 --- !u!114 &114614510485921316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -260,6 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mask: {fileID: 331731623447295062}
+  lightCollider: {fileID: 0}
   radius: 0.8
 --- !u!135 &135578257034761628
 SphereCollider:
