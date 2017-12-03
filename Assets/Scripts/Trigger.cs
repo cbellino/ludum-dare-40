@@ -17,6 +17,5 @@ namespace LD40
 			var param = new TriggerParam { collider = collider, source = gameObject };
 			SendMessageUpwards("OnChildTriggerEnter", param);
 		}
-
 	}
 }
