@@ -8,13 +8,21 @@ namespace LD40
 	{
 		public Rigidbody rb;
 		public float speed = 1f;
+		const float threshold = 0.1f;
 
 		void Update ()
 		{
 			float moveHorizontal = Input.GetAxis("Horizontal");
 
-			Vector3 moveForce = new Vector3(moveHorizontal, 0f, 0f);
-			rb.velocity += moveForce * Mathf.Max(2f, speed);
+			if (moveHorizontal != 0f)
+			{
+				Vector3 velocity = new Vector3(
+					moveHorizontal * speed,
+					rb.velocity.y,
+					rb.velocity.z
+				);
+				rb.velocity = velocity;
+			}
 		}
 	}
 }

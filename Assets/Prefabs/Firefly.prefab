@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45958d796dbee6e4193107b3a156da4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentState: {fileID: 0}
   rb: {fileID: 54825983163034362}
   followCollider: {fileID: 135578257034761628}
   attractCollider: {fileID: 135626496414293982}

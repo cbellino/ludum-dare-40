@@ -9,6 +9,7 @@ namespace LD40
 			get { return _currentState; }
 			set { Transition(value); }
 		}
+		[SerializeField]
 		protected State _currentState;
 		protected bool _inTransition;
 

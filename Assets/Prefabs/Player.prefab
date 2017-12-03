@@ -56,6 +56,10 @@ GameObject:
   - component: {fileID: 65305169919764566}
   - component: {fileID: 135124768535839466}
   - component: {fileID: 114660462160344442}
+  - component: {fileID: 114893177644307784}
+  - component: {fileID: 114136321689204608}
+  - component: {fileID: 114341373368101956}
+  - component: {fileID: 114407258865588874}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -82,28 +86,28 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1853388707320870}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -5, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4829724611723088}
   - {fileID: 4481753458138172}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &4829724611723088
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1728391000989470}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4624560319358334}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!54 &54483699264069072
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -112,7 +116,7 @@ Rigidbody:
   m_GameObject: {fileID: 1853388707320870}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 20
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -125,12 +129,26 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1853388707320870}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9c14699cc5f69984aa2cb020fae9edd1, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.43, y: 0.79, z: 0.2}
   m_Center: {x: -0.06, y: -0.11, z: 0}
+--- !u!114 &114136321689204608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1853388707320870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caf2908e701fad64bba0899cfd08b4cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentState: {fileID: 0}
+  movement: {fileID: 114193083227161316}
+  jumper: {fileID: 114893177644307784}
 --- !u!114 &114193083227161316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,7 +161,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 54483699264069072}
-  speed: 0.8
+  speed: 1.5
+--- !u!114 &114341373368101956
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1853388707320870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58a36c192ce0cf243a4dbf66f8315495, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114407258865588874
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1853388707320870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db60057648949074e9369fded058595a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 54483699264069072}
 --- !u!114 &114660462160344442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -158,6 +199,19 @@ MonoBehaviour:
   mask: {fileID: 331015923908656514}
   lightCollider: {fileID: 135124768535839466}
   radius: 0.57
+--- !u!114 &114893177644307784
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1853388707320870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e4a2f283aadbd4c8723711dd375cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 54483699264069072}
+  jumpVector: {x: 0, y: 180, z: 0}
 --- !u!135 &135124768535839466
 SphereCollider:
   m_ObjectHideFlags: 1
