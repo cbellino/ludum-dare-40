@@ -12,12 +12,17 @@ namespace LD40
 		[Range(0f, 5f)]
 		public float radius = 3f;
 
+		const float lerpSpeed = 10f;
+
 		void Update ()
 		{
-			mask.transform.localScale = Vector3.one * radius * 2;
+			Vector3 newScale = Vector3.one * radius * 2;
+			mask.transform.localScale = Vector3.Lerp(mask.transform.localScale, newScale, Time.deltaTime * lerpSpeed);
+
 			if (lightCollider)
 			{
 				lightCollider.radius = radius;
+				lightCollider.radius = Mathf.Lerp(lightCollider.radius, radius, Time.deltaTime * lerpSpeed);
 			}
 		}
 

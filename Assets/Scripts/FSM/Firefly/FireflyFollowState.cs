@@ -13,14 +13,6 @@ namespace LD40
 			owner.AddLightToFollowingActor(owner.lightEmitter.radius);
 		}
 
-		public override void Exit ()
-		{
-			base.Exit();
-
-			owner.lightEmitter.mask.gameObject.SetActive(true);
-			owner.attractCollider.enabled = false;
-		}
-
 		void Update ()
 		{
 			Follow();
