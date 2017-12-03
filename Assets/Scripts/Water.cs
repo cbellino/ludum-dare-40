@@ -7,6 +7,7 @@ namespace LD40
 	public class Water : MonoBehaviour
 	{
 		public Collider attractCollider;
+		public Transform attractionTarget;
 
 		void OnChildTriggerEnter (TriggerParam param)
 		{
@@ -14,7 +15,7 @@ namespace LD40
 			{
 				if (param.collider.gameObject.tag == "Firefly" && param.collider.name == "Attract Collider")
 				{
-					param.collider.gameObject.SendMessageUpwards("AttractedByWater", this);
+					param.collider.gameObject.SendMessageUpwards("AttractedByWater", attractionTarget);
 				}
 			}
 		}

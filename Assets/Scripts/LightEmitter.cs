@@ -12,7 +12,7 @@ namespace LD40
 		[Range(0f, 5f)]
 		public float radius = 3f;
 
-		const float lerpSpeed = 10f;
+		const float lerpSpeed = 7f;
 
 		void Update ()
 		{

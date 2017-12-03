@@ -25,9 +25,9 @@ namespace LD40
 			transform.position = Vector3.MoveTowards(transform.position, destination, step);
 		}
 
-		public void AttractedByWater (Water water)
+		public void AttractedByWater (Transform target)
 		{
-			owner.attractedTo = water.transform;
+			owner.attractedTo = target;
 			owner.ChangeState<FireflyAttractedState>();
 		}
 	}

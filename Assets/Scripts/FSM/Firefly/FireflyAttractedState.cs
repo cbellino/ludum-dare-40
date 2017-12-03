@@ -7,7 +7,7 @@ namespace LD40
 	public class FireflyAttractedState : FireflyState
 	{
 		const float followDistance = 0.5f;
-		const float speed = 10f;
+		const float speed = 5f;
 		bool arrivedAtDestination = false;
 
 		public override void Enter ()
@@ -22,18 +22,18 @@ namespace LD40
 
 		void Update ()
 		{
-			if (arrivedAtDestination) { return; }
+			// if (arrivedAtDestination) { return; }
 
 			transform.position = Vector3.Lerp(
 				transform.position,
-				owner.followingActor.position,
+				owner.attractedTo.position,
 				Time.deltaTime * speed
 			);
 		}
 
 		IEnumerator MoveAndChangeState ()
 		{
-			yield return new WaitForSeconds(1f);
+			yield return null;
 
 			arrivedAtDestination = true;
 			owner.AddLightToFollowingActor(-owner.lightEmitter.radius);
